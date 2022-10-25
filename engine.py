@@ -4,15 +4,15 @@ import time
 
 import torch
 import torchvision.models.detection.mask_rcnn
-import omsk_regio.utils
-from omsk_regio.coco_eval import CocoEvaluator
-from omsk_regio.coco_utils import get_coco_api_from_dataset
+import omsk_region.utils
+from omsk_region.coco_eval import CocoEvaluator
+from omsk_region.coco_utils import get_coco_api_from_dataset
 
 
 def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq, scaler=None):
     model.train()
     metric_logger = omsk_regio.utils.MetricLogger(delimiter="  ")
-    metric_logger.add_meter("lr", omsk_regio.utils.SmoothedValue(window_size=1, fmt="{value:.6f}"))
+    metric_logger.add_meter("lr", omsk_region.utils.SmoothedValue(window_size=1, fmt="{value:.6f}"))
     header = f"Epoch: [{epoch}]"
 
     lr_scheduler = None
@@ -32,7 +32,7 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq, sc
             losses = sum(loss for loss in loss_dict.values())
 
         # reduce losses over all GPUs for logging purposes
-        loss_dict_reduced = omsk_regio.utils.reduce_dict(loss_dict)
+        loss_dict_reduced = omsk_region.utils.reduce_dict(loss_dict)
         losses_reduced = sum(loss for loss in loss_dict_reduced.values())
 
         loss_value = losses_reduced.item()
@@ -79,7 +79,7 @@ def evaluate(model, data_loader, device):
     torch.set_num_threads(1)
     cpu_device = torch.device("cpu")
     model.eval()
-    metric_logger = omsk_regio.utils.MetricLogger(delimiter="  ")
+    metric_logger = omsk_region.utils.MetricLogger(delimiter="  ")
     header = "Test:"
 
     coco = get_coco_api_from_dataset(data_loader.dataset)
