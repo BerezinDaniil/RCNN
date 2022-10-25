@@ -4,7 +4,7 @@ import os
 import torch
 import torch.utils.data
 import torchvision
-import omsk_regio.transforms as T
+import omsk_region.transforms as T
 from pycocotools import mask as coco_mask
 from pycocotools.coco import COCO
 
