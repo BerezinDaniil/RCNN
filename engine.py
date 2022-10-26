@@ -11,7 +11,7 @@ from omsk_region.coco_utils import get_coco_api_from_dataset
 
 def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq, scaler=None):
     model.train()
-    metric_logger = omsk_regio.utils.MetricLogger(delimiter="  ")
+    metric_logger = omsk_region.utils.MetricLogger(delimiter="  ")
     metric_logger.add_meter("lr", omsk_region.utils.SmoothedValue(window_size=1, fmt="{value:.6f}"))
     header = f"Epoch: [{epoch}]"
 
